@@ -7,7 +7,7 @@ import os.path
 start_time = time.time()
 base_activity = {
         'details': 'Nothing',
-        'state': '',
+        'state': 'Nothing',
         'timestamps': {
             "start": start_time
         },
@@ -19,7 +19,7 @@ base_activity = {
         }
     }
 
-client_id = '425602550470017024'
+client_id = '499582279258079233'
 
 try:
     rpc_obj = rpc.DiscordIpcClient.for_platform(client_id)
@@ -36,9 +36,10 @@ def update_presence():
     activity = base_activity
     activity['state'] = get_cwd()
     activity['details'] = get_filename()
-    activity['assets']['large_text'] = 'Editing a {} file'.format(get_extension().upper())
-    if get_extension():
-        activity['assets']['large_image'] = get_extension()
+    # activity['assets']['large_text'] = 'Editing a {} file'.format(get_extension().upper())
+    activity['assets']['large_image'] = 'vim'
+    #if get_extension():
+    #    activity['assets']['large_image'] = get_extension()
 
     try:
         rpc_obj.set_activity(activity)
@@ -59,7 +60,7 @@ def get_cwd():
     """Get current working directory
     :returns: string
     """
-    return os.path.basename(os.path.normpath(vim.eval('expand("%:p")')))
+    return os.path.basename(os.path.normpath(vim.eval('getcwd()')))
 
 def get_extension():
     """Get exension for file that is being edited
