@@ -2,10 +2,12 @@ import vim
 import rpc
 import time
 import logging
+import os.path
 
 start_time = time.time()
 base_activity = {
         'details': 'Nothing',
+        'state': '',
         'timestamps': {
             "start": start_time
         },
@@ -32,6 +34,7 @@ def update_presence():
 
     """
     activity = base_activity
+    activity['state'] = get_cwd()
     activity['details'] = get_filename()
     activity['assets']['large_text'] = 'Editing a {} file'.format(get_extension().upper())
     if get_extension():
@@ -51,6 +54,12 @@ def get_filename():
     :returns: string
     """
     return vim.eval('expand("%:t")')
+
+def get_cwd():
+    """Get current working directory
+    :returns: string
+    """
+    return os.path.basename(os.path.normpath(vim.eval('expand("%:p")')))
 
 def get_extension():
     """Get exension for file that is being edited
